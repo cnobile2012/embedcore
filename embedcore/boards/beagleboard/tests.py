@@ -23,14 +23,14 @@ from embedcore.boards.beagleboard import BeagleBoneException, BeagleBoneCore
 NOT_BB = "Not a BeagleBone, therefore no tests will be run."
 
 def testForThisBoard():
-    rpc = None
+    bb = None
 
     try:
-        rpc = BeagleBoneCore()
+        bb = BeagleBoneCore()
     except BeagleBoneException:
         pass
 
-    return rpc
+    return bb
 
 
 @unittest.skipUnless(testForThisBoard(), NOT_BB)
