@@ -7,7 +7,7 @@ Currently the work is with the Raspberry Pi.
 
 Intending to include the BeagleBone and the Spark Core.
 
-This code will eventually  impliment various serial interfaces like the I2C and SPI. It will also impliment various chips with the boards.
+This code will eventually  implement various serial interfaces like the I2C and SPI. It will also implement various chips with the boards.
 
 
 
