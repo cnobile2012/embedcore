@@ -76,3 +76,8 @@ Rev. No.  Model  Capabilities
                  mounting holes, Pin3=GPIO1, Pin5=GPIO2, Pin13=GPIO27, I2C-1,
                  8 extra IO pads (P5)
 ```
+--------------------------------------------------------------------------------
+
+Comments and discussion on this topic are welcome. Please contact me at:
+
+carl dot nobile at gmail.com
