@@ -11,6 +11,9 @@ email: carl.nobile@gmail.com
 __docformat__ = "restructuredtext en"
 
 
+import re
+
+
 class RaspberryPiException(Exception): pass
 
 
@@ -43,10 +46,11 @@ class RaspberryPiCore(object):
                 m = re.search('bcm2708.boardrev=(0x[0123456789abcdef]*) ',
                               f.readline())
                 self.boardRev = m.group(1)
-        except Exception:
-            raise RaspberryPiException("Possible not a Raspberry Pi.")
+        except Exception, e:
+            msg = "Possible not a Raspberry Pi, %s"
+            raise RaspberryPiException(msg % e)
 
-        self.model, self.memory, self.i2cPort = REVISIONS[self.boardRev]
+        self.model, self.memory, self.i2cPort = self.REVISIONS[self.boardRev]
 
     def getBoardRevision(self):
         return self.boardRev

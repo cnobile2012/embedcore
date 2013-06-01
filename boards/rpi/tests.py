@@ -57,14 +57,14 @@ class TestRaspberryPi(unittest.TestCase):
         self.assertTrue(model in models)
 
     def test_getMaxMemory(self):
-        memory = self._rpc.getModel()
+        memory = self._rpc.getMaxMemory()
         memories = [y for x, y, z in set(RaspberryPiCore.REVISIONS.values())]
         self.assertTrue(memory in memories)
 
     def test_getI2CPort(self):
         port = self._rpc.getI2CPort()
         ports = [z for x, y, z in set(RaspberryPiCore.REVISIONS.values())]
-        self.assrtTrue(port in ports)
+        self.assertTrue(port in ports)
 
 if __name__ == '__main__':
     unittest.main()
