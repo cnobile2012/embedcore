@@ -45,8 +45,9 @@ class RaspberryPiCore(object):
             with open('/proc/cmdline', 'r') as f:
                 m = re.search('bcm2708.boardrev=(0x[0123456789abcdef]*) ',
                               f.readline())
+
                 if m is None:
-                    raise RaspberryPiException("Possible not a Raspberry Pi.")
+                    raise RaspberryPiException("Possibly not a Raspberry Pi.")
 
                 self.boardRev = m.group(1)
         except Exception, e:
