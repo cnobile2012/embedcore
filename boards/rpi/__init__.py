@@ -12,4 +12,4 @@ __docformat__ = "restructuredtext en"
 
 
 
-from .raspberry_pi import RaspberryPiCore, RaspberryPiException
+from .raspberrypi import RaspberryPiCore, RaspberryPiException

@@ -8,22 +8,23 @@
 #
 import smbus
 
+from boards.boardfactory import BoardFactory
+
 
 class I2CException(Exception): pass
 
 
-class I2C(object):
+class I2C(BoardFactory):
     """
-    This class impliments w level interface for the I2C protocol.
+    This class implements the interface for the I2C protocol.
     """
     def __init__(self, address, busnum=-1, debug=False):
         """
-        By default, the correct I2C bus is auto-detected using /proc/cpuinfo
-
         Alternatively, you can hard-code the bus version below:
         self.bus = smbus.SMBus(0); # Force I2C0 (early 256MB Pi's)
         self.bus = smbus.SMBus(1); # Force I2C1 (512MB Pi's)
         """
+        super(I2C, self).__init__()
         self.address = address
         self.bus = smbus.SMBus(
           busnum >= 0 and busnum or I2C.getPiI2CBusNumber())

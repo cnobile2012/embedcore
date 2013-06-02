@@ -10,6 +10,7 @@ PREFIX		= $(shell pwd)
 PACKAGE_DIR	= $(shell echo $${PWD\#\#*/})
 BOARDS_DIR	= ${PREFIX}/boards
 RPI_DIR		= ${BOARDS_DIR}/rpi
+BB_DIR		= ${BOARDS_DIR}/beagleboard
 #DOCS_DIR	= ${PREFIX}/docs
 
 #----------------------------------------------------------------------
@@ -39,6 +40,7 @@ clean	:
 	@rm -f *~ \#* .\#* *.pyc
 	@(cd ${BOARDS_DIR}; rm -f *~ \#* .\#* *.pyc)
 	@(cd ${RPI_DIR}; rm -f *~ \#* .\#* *.pyc)
+	@(cd ${BB_DIR}; rm -f *~ \#* .\#* *.pyc)
 	#@(cd ${DOCS_DIR}; make clean)
 
 clobber	: clean
