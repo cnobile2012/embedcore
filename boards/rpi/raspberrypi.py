@@ -13,10 +13,11 @@ __docformat__ = "restructuredtext en"
 
 import re
 
+from boards import BoardsException
 from boards.boards_base import BoardsBase
 
 
-class RaspberryPiException(Exception): pass
+class RaspberryPiException(BoardsException): pass
 
 
 class RaspberryPiCore(BoardsBase):

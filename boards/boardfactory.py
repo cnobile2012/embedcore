@@ -11,15 +11,26 @@ email: carl.nobile@gmail.com
 __docformat__ = "restructuredtext en"
 
 
+from boards import BoardsException
 from boards.rpi import RaspberryPiCore, RaspberryPiException
 from boards.beagleboard import BeagleBoneCore, BeagleBoneException
 
 
 class BoardFactory(RaspberryPiCore, BeagleBoneCore):
     """
-    This class determines which board is in use. It runs the _getBoardRevision
-    method from all subclasses till one succeeds.
+    This class determines which board is in use. It runs the __init__ method
+    from all subclasses till one succeeds.
     """
-    def __init__(self):
-        pass
+    __EXCLUDE = ("object", "BoardFactory", "BoardsBase",)
 
+    def __init__(self):
+        subs = [klass for klass in self.__class__.__mro__
+                if klass.__name__ not in self.__EXCLUDE]
+
+        for klass in subs:
+            try:
+                klass.__init__(self)
+            except BoardsException, e:
+                continue
+
+            break

@@ -13,10 +13,11 @@ __docformat__ = "restructuredtext en"
 
 import re
 
+from boards import BoardsException
 from boards.boards_base import BoardsBase
 
 
-class BeagleBoneException(Exception): pass
+class BeagleBoneException(BoardsException): pass
 
 
 class BeagleBoneCore(BoardsBase):
@@ -25,4 +26,4 @@ class BeagleBoneCore(BoardsBase):
         super(BeagleBoneCore, self).__init__()
 
     def _getBoardRevision(self):
-        pass
+        raise BeagleBoneException("Possibly not a BeagleBone.")

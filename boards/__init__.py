@@ -10,3 +10,5 @@ email: carl.nobile@gmail.com
 """
 __docformat__ = "restructuredtext en"
 
+
+class BoardsException(Exception): pass
