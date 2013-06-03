@@ -49,21 +49,22 @@ class TestRaspberryPi(unittest.TestCase):
         except RaspberryPiException, e:
             self.assertRaises(e)
 
-        self.assertTrue(self._revision in RaspberryPiCore.REVISIONS.keys())
+        self.assertTrue(self._revision in RaspberryPiCore.RPI_REVISIONS.keys())
 
     def test_getModel(self):
         model = self._rpc.getModel()
-        models = [x for x, y, z in set(RaspberryPiCore.REVISIONS.values())]
+        models = [x for x, y, z in set(RaspberryPiCore.RPI_REVISIONS.values())]
         self.assertTrue(model in models)
 
     def test_getMaxMemory(self):
         memory = self._rpc.getMaxMemory()
-        memories = [y for x, y, z in set(RaspberryPiCore.REVISIONS.values())]
+        memories = [y for x, y, z in set(
+            RaspberryPiCore.RPI_REVISIONS.values())]
         self.assertTrue(memory in memories)
 
     def test_getI2CPort(self):
         port = self._rpc.getI2CPort()
-        ports = [z for x, y, z in set(RaspberryPiCore.REVISIONS.values())]
+        ports = [z for x, y, z in set(RaspberryPiCore.RPI_REVISIONS.values())]
         self.assertTrue(port in ports)
 
 if __name__ == '__main__':
