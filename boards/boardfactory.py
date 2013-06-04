@@ -21,16 +21,14 @@ class BoardFactory(RaspberryPiCore, BeagleBoneCore):
     This class determines which board is in use. It runs the __init__ method
     from all subclasses till one succeeds.
     """
-    __EXCLUDE = ("object", "BoardFactory", "BoardsBase",)
 
     def __init__(self):
-        subs = [klass for klass in self.__class__.__mro__
-                if klass.__name__ not in self.__EXCLUDE]
-
-        for klass in subs:
+        for klass in self.__class__.__bases__:
             try:
                 klass.__init__(self)
             except BoardsException, e:
                 continue
 
             break
+
+# FIXME raise an exception if none of the boards work.
