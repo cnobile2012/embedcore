@@ -15,6 +15,7 @@ import re
 
 from boards import BoardsException
 from boards.boards_base import BoardsBase
+from boards.boardfactory import BoardFactory
 
 
 class BeagleBoneException(BoardsException): pass
