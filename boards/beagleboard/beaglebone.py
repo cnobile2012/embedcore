@@ -26,7 +26,7 @@ class BeagleBoneCore(BoardsBase):
         super(BeagleBoneCore, self).__init__()
 
         # Allow this class to be called directly.
-        if len(self.__class__.__bases__) == 1:
+        if BoardsBase in self.__class__.__bases__:
             self._getBoardRevision()
 
     def _getBoardRevision(self):
