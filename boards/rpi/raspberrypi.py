@@ -15,7 +15,6 @@ import re
 
 from boards import BoardsException
 from boards.boards_base import BoardsBase
-from boards.boardfactory import BoardFactory
 
 
 class RaspberryPiException(BoardsException): pass
@@ -36,7 +35,7 @@ class RaspberryPiCore(BoardsBase):
         self.boardRev = self.DEFAULT_REV
 
         # Allow this class to be called directly.
-        if BoardFactory not in self.mro():
+        if len(self.__class__.__bases__) == 1:
             self._getBoardRevision()
 
     def _getBoardRevision(self):

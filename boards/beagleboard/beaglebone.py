@@ -15,7 +15,6 @@ import re
 
 from boards import BoardsException
 from boards.boards_base import BoardsBase
-from boards.boardfactory import BoardFactory
 
 
 class BeagleBoneException(BoardsException): pass
@@ -27,7 +26,7 @@ class BeagleBoneCore(BoardsBase):
         super(BeagleBoneCore, self).__init__()
 
         # Allow this class to be called directly.
-        if BoardFactory not in self.mro():
+        if len(self.__class__.__bases__) == 1:
             self._getBoardRevision()
 
     def _getBoardRevision(self):

@@ -11,5 +11,4 @@ email: carl.nobile@gmail.com
 __docformat__ = "restructuredtext en"
 
 
-
 from .raspberrypi import RaspberryPiCore, RaspberryPiException
