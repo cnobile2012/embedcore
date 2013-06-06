@@ -35,6 +35,7 @@ tests	:
 	#@(. ${PREFIX}/setup_settings; python ${BOARDS_DIR}/tests.py)
 	@echo "Testing the ${RPI_DIR}..."
 	@(. ${PREFIX}/setup_settings; python ${RPI_DIR}/tests.py)
+	@echo "Testing the ${BB_DIR}..."
 	@(. ${PREFIX}/setup_settings; python ${BB_DIR}/tests.py)
 #----------------------------------------------------------------------
 clean	:
