@@ -25,6 +25,10 @@ class BeagleBoneCore(BoardsBase):
     def __init__(self):
         super(BeagleBoneCore, self).__init__()
 
+        # Allow this class to be called directly.
+        if BoardFactory not in self.mro():
+            self._getBoardRevision()
+
     def _getBoardRevision(self):
         print "BeagleBoneException"
         raise BeagleBoneException("Possibly not a BeagleBone.")

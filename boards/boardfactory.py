@@ -17,6 +17,7 @@ from boards.rpi import RaspberryPiCore
 from boards.beagleboard import BeagleBoneCore
 
 
+# mro: BoardFactory -> RaspberryPiCore -> BeagleBoneCore -> BoardsBase -> object
 class BoardFactory(RaspberryPiCore, BeagleBoneCore):
     """
     This class determines which board is in use. It runs the __init__ method
