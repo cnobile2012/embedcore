@@ -26,4 +26,5 @@ class BeagleBoneCore(BoardsBase):
         super(BeagleBoneCore, self).__init__()
 
     def _getBoardRevision(self):
+        print "BeagleBoneException"
         raise BeagleBoneException("Possibly not a BeagleBone.")

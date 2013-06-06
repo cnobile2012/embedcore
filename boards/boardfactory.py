@@ -11,9 +11,10 @@ email: carl.nobile@gmail.com
 __docformat__ = "restructuredtext en"
 
 
+import sys, traceback
 from boards import BoardsException
-from boards.rpi import RaspberryPiCore, RaspberryPiException
-from boards.beagleboard import BeagleBoneCore, BeagleBoneException
+from boards.rpi import RaspberryPiCore
+from boards.beagleboard import BeagleBoneCore
 
 
 class BoardFactory(RaspberryPiCore, BeagleBoneCore):
@@ -26,9 +27,11 @@ class BoardFactory(RaspberryPiCore, BeagleBoneCore):
         for klass in self.__class__.__bases__:
             try:
                 klass.__init__(self)
+                klass._getBoardRevision(self)
             except BoardsException, e:
-                continue
+                pass
+            else:
+                break
 
-            break
-
-# FIXME raise an exception if none of the boards work.
+            msg = "None of the implemented boards were detected."
+            raise BoardsException(msg)

@@ -31,8 +31,8 @@ class RaspberryPiCore(BoardsBase):
     DEFAULT_REV = "0x0"
 
     def __init__(self):
-        self.boardRev = self.DEFAULT_REV
         super(RaspberryPiCore, self).__init__()
+        self.boardRev = self.DEFAULT_REV
 
     def _getBoardRevision(self):
         """

@@ -19,7 +19,6 @@ class BoardsBase(object):
         self.model = ""
         self.memory = 0
         self.i2cPort = -1
-        self._getBoardRevision()
 
     def _getBoardRevision(self):
         """
