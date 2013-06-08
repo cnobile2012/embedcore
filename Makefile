@@ -8,9 +8,12 @@ include include.mk
 
 PREFIX		= $(shell pwd)
 PACKAGE_DIR	= $(shell echo $${PWD\#\#*/})
-BOARDS_DIR	= ${PREFIX}/boards
+PACKAGE_NAME	= embedcore
+BOARDS_DIR	= ${PREFIX}/${PACKAGE_NAME}/boards
 RPI_DIR		= ${BOARDS_DIR}/rpi
 BB_DIR		= ${BOARDS_DIR}/beagleboard
+INTERFACES_DIR	= ${PREFIX}/${PACKAGE_NAME}/interfaces
+I2C_DIR		= ${INTERFACES_DIR}/i2c
 #DOCS_DIR	= ${PREFIX}/docs
 
 #----------------------------------------------------------------------
@@ -43,6 +46,7 @@ clean	:
 	@(cd ${BOARDS_DIR}; rm -f *~ \#* .\#* *.pyc)
 	@(cd ${RPI_DIR}; rm -f *~ \#* .\#* *.pyc)
 	@(cd ${BB_DIR}; rm -f *~ \#* .\#* *.pyc)
+	@(cd ${I2C_DIR}; rm -f *~ \#* .\#* *.pyc)
 	#@(cd ${DOCS_DIR}; make clean)
 
 clobber	: clean
