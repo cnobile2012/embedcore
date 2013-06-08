@@ -17,7 +17,7 @@ __docformat__ = "restructuredtext en"
 import unittest
 
 
-from boards.beagleboard import BeagleBoneException, BeagleBoneCore
+from embedcore.boards.beagleboard import BeagleBoneException, BeagleBoneCore
 
 
 NOT_RPI = "Not a BeagleBone, therefore no tests will be run."
@@ -78,6 +78,7 @@ class TestBeagleBone(unittest.TestCase):
         port = self._bb.getI2CPort()
         ports = [z for x, y, z in set(BeagleBoneCore.BB_REVISIONS.values())]
         self.assertTrue(port in ports)
+
 
 if __name__ == '__main__':
     unittest.main()

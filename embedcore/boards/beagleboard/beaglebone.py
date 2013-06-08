@@ -13,8 +13,8 @@ __docformat__ = "restructuredtext en"
 
 import re
 
-from boards import BoardsException
-from boards.boards_base import BoardsBase
+from embedcore.boards import BoardsException
+from embedcore.boards.boards_base import BoardsBase
 
 
 class BeagleBoneException(BoardsException): pass

@@ -16,26 +16,32 @@ __docformat__ = "restructuredtext en"
 
 import unittest
 
-from embedcore.boards.boardsfactory import BoardFactory
+from embedcore.boards import BoardsException
+from embedcore.boards.boardfactory import BoardFactory
 
 
 class TestBoardFactory(unittest.TestCase):
     """
     Tests for the board factory.
     """
+    
 
     def __init__(self, name):
         super(TestBoardFactory, self).__init__(name)
-        self._bf = None
 
     def setUp(self):
-        self._bf = BoardFactory()
+        pass
 
     def tearDown(self):
-        self._bf = None
+        pass
 
-
-
+    def test__init__(self):
+        try:
+            bf = BoardFactory()
+        except Exception as e:
+            self.assertRaises(BoardsException)
+        else:
+            self.assertNotEqual(bf, None)
 
 
 if __name__ == '__main__':

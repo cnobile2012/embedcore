@@ -17,7 +17,7 @@ __docformat__ = "restructuredtext en"
 import unittest
 
 
-from boards.rpi import RaspberryPiException, RaspberryPiCore
+from embedcore.boards.rpi import RaspberryPiException, RaspberryPiCore
 
 
 NOT_RPI = "Not a Raspberry Pi, therefore no tests will be run."
@@ -79,6 +79,7 @@ class TestRaspberryPi(unittest.TestCase):
         port = self._rpc.getI2CPort()
         ports = [z for x, y, z in set(RaspberryPiCore.RPI_REVISIONS.values())]
         self.assertTrue(port in ports)
+
 
 if __name__ == '__main__':
     unittest.main()

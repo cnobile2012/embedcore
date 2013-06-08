@@ -12,9 +12,9 @@ __docformat__ = "restructuredtext en"
 
 
 import sys, traceback
-from boards import BoardsException
-from boards.rpi import RaspberryPiCore
-from boards.beagleboard import BeagleBoneCore
+from embedcore.boards import BoardsException
+from embedcore.boards.rpi import RaspberryPiCore
+from embedcore.boards.beagleboard import BeagleBoneCore
 
 
 # mro: BoardFactory -> RaspberryPiCore -> BeagleBoneCore -> BoardsBase -> object
