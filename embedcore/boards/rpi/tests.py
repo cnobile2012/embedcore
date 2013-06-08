@@ -59,7 +59,7 @@ class TestRaspberryPi(unittest.TestCase):
     def test_getBoardRevision(self):
         try:
             self._revision = self._rpc.getBoardRevision()
-        except RaspberryPiException, e:
+        except RaspberryPiException as e:
             self.assertRaises(e)
 
         self.assertTrue(self._revision in RaspberryPiCore.RPI_REVISIONS.keys())

@@ -59,7 +59,7 @@ class TestBeagleBone(unittest.TestCase):
     def test_getBoardRevision(self):
         try:
             self._revision = self._bb.getBoardRevision()
-        except BeagleBoneException, e:
+        except BeagleBoneException as e:
             self.assertRaises(e)
 
         self.assertTrue(self._revision in BeagleBoneCore.BB_REVISIONS.keys())

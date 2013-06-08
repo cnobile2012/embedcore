@@ -54,7 +54,7 @@ class RaspberryPiCore(BoardsBase):
                     raise RaspberryPiException("Possibly not a Raspberry Pi.")
 
                 self.boardRev = m.group(1)
-        except Exception, e:
+        except Exception as e:
             raise e
 
         self.model, self.memory, self.i2cPort = \

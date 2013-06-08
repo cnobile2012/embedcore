@@ -29,7 +29,7 @@ class BoardFactory(RaspberryPiCore, BeagleBoneCore):
             try:
                 klass.__init__(self)
                 klass._getBoardRevision(self)
-            except BoardsException, e:
+            except BoardsException as e:
                 pass
             else:
                 break
