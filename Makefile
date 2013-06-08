@@ -7,12 +7,12 @@
 include include.mk
 
 PREFIX		= $(shell pwd)
-PACKAGE_DIR	= $(shell echo $${PWD\#\#*/})
-PACKAGE_NAME	= embedcore
-BOARDS_DIR	= ${PREFIX}/${PACKAGE_NAME}/boards
+BASE_DIR	= $(shell echo $${PWD\#\#*/})
+PACKAGE_DIR	= ${PREFIX}/embedcore
+BOARDS_DIR	= ${PACKAGE_DIR}/boards
 RPI_DIR		= ${BOARDS_DIR}/rpi
 BB_DIR		= ${BOARDS_DIR}/beagleboard
-INTERFACES_DIR	= ${PREFIX}/${PACKAGE_NAME}/interfaces
+INTERFACES_DIR	= ${PACKAGE_DIR}/interfaces
 I2C_DIR		= ${INTERFACES_DIR}/i2c
 #DOCS_DIR	= ${PREFIX}/docs
 
@@ -24,8 +24,8 @@ doc	:
 	@(cd $(DOCS_DIR); make)
 #----------------------------------------------------------------------
 tar	: clean
-	@(cd ..; tar -czvf ${PACKAGE_DIR}-${VERSION}.tar.gz --exclude=".git" \
-          ${PACKAGE_DIR})
+	@(cd ..; tar -czvf ${BASE_DIR}-${VERSION}.tar.gz --exclude=".git" \
+          ${BASE_DIR})
 #----------------------------------------------------------------------
 python-api:
 	@python setup.py build
@@ -43,6 +43,7 @@ tests	:
 #----------------------------------------------------------------------
 clean	:
 	@rm -f *~ \#* .\#* *.pyc
+	@(cd ${PACKAGE_DIR}; rm -f *~ \#* .\#* *.pyc)
 	@(cd ${BOARDS_DIR}; rm -f *~ \#* .\#* *.pyc)
 	@(cd ${RPI_DIR}; rm -f *~ \#* .\#* *.pyc)
 	@(cd ${BB_DIR}; rm -f *~ \#* .\#* *.pyc)
