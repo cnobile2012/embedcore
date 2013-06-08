@@ -39,8 +39,10 @@ class TestBoardFactory(unittest.TestCase):
         try:
             bf = BoardFactory()
         except Exception as e:
+            # This tests the condition where no boards are found.
             self.assertRaises(BoardsException)
         else:
+            # This tests that an implimented boards was found.
             self.assertNotEqual(bf, None)
 
 
