@@ -20,7 +20,7 @@ import unittest
 from embedcore.boards.beagleboard import BeagleBoneException, BeagleBoneCore
 
 
-NOT_RPI = "Not a BeagleBone, therefore no tests will be run."
+NOT_BB = "Not a BeagleBone, therefore no tests will be run."
 
 def testForThisBoard():
     rpc = None
@@ -33,7 +33,7 @@ def testForThisBoard():
     return rpc
 
 
-@unittest.skipUnless(testForThisBoard(), NOT_RPI)
+@unittest.skipUnless(testForThisBoard(), NOT_BB)
 class TestBeagleBone(unittest.TestCase):
     """
     Tests for the BeagleBone board API.
