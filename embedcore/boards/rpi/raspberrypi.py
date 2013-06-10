@@ -37,6 +37,7 @@ class RaspberryPiCore(BoardsBase):
         # Allow this class to be called directly.
         if BoardsBase in self.__class__.__bases__:
             self._getBoardRevision()
+            self._boardHook()
 
     def _getBoardRevision(self):
         """
@@ -59,3 +60,9 @@ class RaspberryPiCore(BoardsBase):
 
         self.model, self.memory, self.i2cPort = \
                     self.RPI_REVISIONS[self.boardRev]
+
+    def _boardHook(self):
+        """
+        Sets up any board specific code like GPIO mappings, etc.
+        """
+        pass

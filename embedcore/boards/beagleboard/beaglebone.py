@@ -28,6 +28,13 @@ class BeagleBoneCore(BoardsBase):
         # Allow this class to be called directly.
         if BoardsBase in self.__class__.__bases__:
             self._getBoardRevision()
+            self._boardHook()
 
     def _getBoardRevision(self):
         raise BeagleBoneException("Possibly not a BeagleBone.")
+
+    def _boardHook(self):
+        """
+        Sets up any board specific code like GPIO mappings, etc.
+        """
+        pass

@@ -30,6 +30,13 @@ class BoardsBase(object):
         raise NotImplementedError(
             self.__ERROR_TEXT.format(self._getBoardRevision.im_func.__name__))
 
+    def _boardHook(self):
+        """
+        Sets up any board specific code like GPIO mappings, etc.
+        """
+        raise NotImplementedError(
+            self.__ERROR_TEXT.format(self._boardHook.im_func.__name__))
+
     def getBoardRevision(self):
         return self.boardRev
 
