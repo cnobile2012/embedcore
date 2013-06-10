@@ -1,5 +1,5 @@
 #
-# beagleboard/beaglebone.py
+# boards/beagleboard/beaglebone.py
 #
 """
 BeagleBone Board specific code.
@@ -13,20 +13,20 @@ __docformat__ = "restructuredtext en"
 
 import re
 
-from embedcore.boards import BoardsException
-from embedcore.boards.boards_base import BoardsBase
+from embedcore.boards import BoardException
+from embedcore.boards.boardbase import BoardBase
 
 
-class BeagleBoneException(BoardsException): pass
+class BeagleBoneException(BoardException): pass
 
 
-class BeagleBoneCore(BoardsBase):
+class BeagleBoneCore(BoardBase):
 
     def __init__(self):
         super(BeagleBoneCore, self).__init__()
 
         # Allow this class to be called directly.
-        if BoardsBase in self.__class__.__bases__:
+        if BoardBase in self.__class__.__bases__:
             self._getBoardRevision()
             self._boardHook()
 

@@ -12,12 +12,12 @@ __docformat__ = "restructuredtext en"
 
 
 import sys, traceback
-from embedcore.boards import BoardsException
+from embedcore.boards import BoardException
 from embedcore.boards.rpi import RaspberryPiCore
 from embedcore.boards.beagleboard import BeagleBoneCore
 
 
-# mro: BoardFactory -> RaspberryPiCore -> BeagleBoneCore -> BoardsBase -> object
+# mro: BoardFactory -> RaspberryPiCore -> BeagleBoneCore -> BoardBase -> object
 class BoardFactory(RaspberryPiCore, BeagleBoneCore):
     """
     This class determines which board is in use. It runs the __init__ method
@@ -30,10 +30,13 @@ class BoardFactory(RaspberryPiCore, BeagleBoneCore):
                 klass.__init__(self)
                 klass._getBoardRevision(self)
                 klass._boardHook(self)
-            except BoardsException as e:
-                pass
+            except BoardException as e:
+                # Look for an exception on a specific board then loop to test
+                # the next board. If all boards raise an exception the loop
+                # will fall through and a general BoardException will be raised.
+                continue
             else:
                 break
 
             msg = "None of the implemented boards were detected."
-            raise BoardsException(msg)
+            raise BoardException(msg)

@@ -1,5 +1,5 @@
 #
-# rpi/raspberrypi.py
+# boards/rpi/raspberrypi.py
 #
 """
 Raspberry PI specific code.
@@ -13,14 +13,14 @@ __docformat__ = "restructuredtext en"
 
 import re
 
-from embedcore.boards import BoardsException
-from embedcore.boards.boards_base import BoardsBase
+from embedcore.boards import BoardException
+from embedcore.boards.boardbase import BoardBase
 
 
-class RaspberryPiException(BoardsException): pass
+class RaspberryPiException(BoardException): pass
 
 
-class RaspberryPiCore(BoardsBase):
+class RaspberryPiCore(BoardBase):
     RPI_REVISIONS = {'0x2': ('B1', 256, 0), '0x3': ('B1+', 256, 0),
                      '0x4': ('B2', 256, 1), '0x5': ('B2', 256, 1),
                      '0x6': ('B2', 256, 1), '0x7': ('A', 256, 1),
@@ -35,7 +35,7 @@ class RaspberryPiCore(BoardsBase):
         self.boardRev = self.DEFAULT_REV
 
         # Allow this class to be called directly.
-        if BoardsBase in self.__class__.__bases__:
+        if BoardBase in self.__class__.__bases__:
             self._getBoardRevision()
             self._boardHook()
 

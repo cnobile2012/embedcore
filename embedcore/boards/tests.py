@@ -16,7 +16,7 @@ __docformat__ = "restructuredtext en"
 
 import unittest
 
-from embedcore.boards import BoardsException
+from embedcore.boards import BoardException
 from embedcore.boards.boardfactory import BoardFactory
 
 
@@ -40,7 +40,7 @@ class TestBoardFactory(unittest.TestCase):
             bf = BoardFactory()
         except Exception as e:
             # This tests the condition where no boards are found.
-            self.assertRaises(BoardsException)
+            self.assertRaises(BoardException)
         else:
             # This tests that an implimented boards was found.
             self.assertNotEqual(bf, None)
