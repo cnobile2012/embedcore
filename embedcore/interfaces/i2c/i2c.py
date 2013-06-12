@@ -8,7 +8,7 @@
 #
 import smbus
 
-from boards.boardfactory import BoardFactory
+from embedcore.boards.boardfactory import BoardFactory
 
 
 class I2CException(Exception): pass
@@ -93,8 +93,8 @@ class I2C(BoardFactory):
             results = self.bus.read_i2c_block_data(self.address, reg, length)
 
             if self.debug:
-                print "I2C: Device 0x%02X returned the " % self.address \
-                      "following from reg 0x%02X" % self.address, reg
+                print "I2C: Device 0x%02X returned the " % self.address + \
+                      "following from reg 0x%02X" % reg
                 print results
             return results
         except IOError as err:
