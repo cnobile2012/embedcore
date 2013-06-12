@@ -1,11 +1,17 @@
 #
-# This package is a redesign of the Adafruit Raspberry-Pi-Python-Code library.
-# Which can be gotten here:
-#   https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code
+# interfaces/i2c/i2c.py
 #
-# My implimentation can be installed using PIP or easy_install and uses the
-# standard python package management.
-#
+"""
+This package is a redesign of the Adafruit Raspberry-Pi-Python-Code library.
+Which can be gotten here:
+    https://github.com/adafruit/Adafruit-Raspberry-Pi-Python-Code
+
+My implimentation can be installed using PIP or easy_install and uses the
+standard python package management.
+"""
+__docformat__ = "restructuredtext en"
+
+
 import smbus
 
 from embedcore.boards.boardfactory import BoardFactory
@@ -189,6 +195,7 @@ class I2C(BoardFactory):
             if (self.debug):
                 print "I2C: Device 0x%02X returned 0x%04X from reg 0x%02X" % (
                     self.address, result & 0xFFFF, reg)
+
             return result
         except IOError as err:
             return self.errMsg()
