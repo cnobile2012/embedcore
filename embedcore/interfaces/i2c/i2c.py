@@ -8,6 +8,18 @@ Which can be gotten here:
 
 My implimentation can be installed using PIP or easy_install and uses the
 standard python package management.
+
+$ sudo nano /etc/modules
+
+Add:
+----
+i2c-bcm2708 
+i2c-dev
+
+$ sudo modprobe i2c-dev
+$ i2cdetect -y busnum
+
+Where busnum is either 0 or 1.
 """
 __docformat__ = "restructuredtext en"
 
