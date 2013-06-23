@@ -61,11 +61,7 @@ class I2C(BoardFactory):
 
         return val
 
-    def errMsg(self):
-        print "Error accessing 0x%02X: Check your I2C address" % self.address
-        return -1
-
-    def write8(self, reg, value):
+    def write8Bits(self, reg, value):
         """
         Writes an 8-bit value to the specified register/address.
         """
@@ -73,11 +69,12 @@ class I2C(BoardFactory):
             self.bus.write_byte_data(self.address, reg, value)
 
             if self.debug:
-                print "I2C: Wrote 0x%02X to register 0x%02X" % (value, reg)
+                print ("I2C: Wrote {0:#04x} to register "
+                       "{0:#04x}").format(value, reg)
         except IOError as err:
-            return self.errMsg()
+            return self._errMsg()
 
-    def write16(self, reg, value):
+    def write16Bits(self, reg, value):
         """
         Writes a 16-bit value to the specified register/address pair.
         """
@@ -85,10 +82,10 @@ class I2C(BoardFactory):
             self.bus.write_word_data(self.address, reg, value)
 
             if self.debug:
-                print "I2C: Wrote 0x%02X to register pair 0x%02X,0x%02X" % (
-                    value, reg, reg+1)
+                print ("I2C: Wrote {0:#04x} to register pair "
+                       "{0:#04x},{0:#04x}").format(value, reg, reg+1)
         except IOError as err:
-            return self.errMsg()
+            return self._errMsg()
 
     def writeList(self, reg, list):
         """
@@ -96,12 +93,12 @@ class I2C(BoardFactory):
         """
         try:
             if self.debug:
-                print "I2C: Writing list to register 0x%02X:" % reg
+                print "I2C: Writing list to register {0:#04x}:".format(reg)
                 print list
 
             self.bus.write_i2c_block_data(self.address, reg, list)
         except IOError as err:
-            return self.errMsg()
+            return self._errMsg()
 
     def readList(self, reg, length):
         """
@@ -111,14 +108,15 @@ class I2C(BoardFactory):
             results = self.bus.read_i2c_block_data(self.address, reg, length)
 
             if self.debug:
-                print "I2C: Device 0x%02X returned the " % self.address + \
-                      "following from reg 0x%02X" % reg
+                print ("I2C: Device {0:#04x} returned the following from reg "
+                       "{0:#04x}").format(self.address, reg)
                 print results
+
             return results
         except IOError as err:
-            return self.errMsg()
+            return self._errMsg()
 
-    def readU8(self, reg):
+    def readU8Bits(self, reg):
         """
         Read an unsigned byte from the I2C device.
         """
@@ -126,13 +124,14 @@ class I2C(BoardFactory):
             result = self.bus.read_byte_data(self.address, reg)
 
             if self.debug:
-                print "I2C: Device 0x%02X returned 0x%02X from reg 0x%02X" % (
-                    self.address, result & 0xFF, reg)
+                print ("I2C: Device {0:#04x} returned {0:#04x} from reg "
+                       "{0:#04x}").format(self.address, result & 0xFF, reg)
+
             return result
         except IOError as err:
-            return self.errMsg()
+            return self._errMsg()
 
-    def readS8(self, reg):
+    def readS8Bits(self, reg):
         """
         Reads a signed byte from the I2C device.
         """
@@ -141,13 +140,14 @@ class I2C(BoardFactory):
             if result > 127: result -= 256
 
             if self.debug:
-                print "I2C: Device 0x%02X returned 0x%02X from reg 0x%02X" % (
-                    self.address, result & 0xFF, reg)
+                print ("I2C: Device {0:#04x} returned {0:#04x} from "
+                       "reg {0:#04x}").format(self.address, result & 0xFF, reg)
+
             return result
         except IOError as err:
-            return self.errMsg()
+            return self._errMsg()
 
-    def readU16(self, reg):
+    def readU16Bits(self, reg):
         """
         Reads an unsigned 16-bit value from the I2C device.
         """
@@ -156,14 +156,15 @@ class I2C(BoardFactory):
             lobyte = self.readU8(reg+1)
             result = (hibyte << 8) + lobyte
 
-            if (self.debug):
-                print "I2C: Device 0x%02X returned 0x%04X from reg 0x%02X" % (
-                    self.address, result & 0xFFFF, reg)
+            if self.debug:
+                print ("I2C: Device {0:#04x} returned {0:#06x} from reg "
+                       "{0:#04x}").format(self.address, result & 0xFFFF, reg)
+
             return result
         except IOError as err:
-            return self.errMsg()
+            return self._errMsg()
 
-    def readS16(self, reg):
+    def readS16Bits(self, reg):
         """
         Reads a signed 16-bit value from the I2C device.
         """
@@ -172,42 +173,49 @@ class I2C(BoardFactory):
             lobyte = self.readU8(reg+1)
             result = (hibyte << 8) + lobyte
 
-            if (self.debug):
-                print "I2C: Device 0x%02X returned 0x%04X from reg 0x%02X" % (
-                    self.address, result & 0xFFFF, reg)
+            if self.debug:
+                print ("I2C: Device {0:#04x} returned {0:#x%06x} from reg "
+                       "{0:#04x}").format(self.address, result & 0xFFFF, reg)
+
             return result
         except IOError as err:
-            return self.errMsg()
+            return self._errMsg()
 
-    def readU16Rev(self, reg):
+    def readU16BitsReverse(self, reg):
         """
-        Reads an unsigned 16-bit value from the I2C device with rev byte order.
+        Reads an unsigned 16-bit value from the I2C device with reverse byte
+        order.
         """
         try:
             lobyte = self.readU8(reg)
             hibyte = self.readU8(reg+1)
             result = (hibyte << 8) + lobyte
 
-            if (self.debug):
-                print "I2C: Device 0x%02X returned 0x%04X from reg 0x%02X" % (
-                    self.address, result & 0xFFFF, reg)
+            if self.debug:
+                print ("I2C: Device {0:#04x} returned {0:#06x} from reg "
+                       "{0:#04x}").format(self.address, result & 0xFFFF, reg)
             return result
         except IOError as err:
-            return self.errMsg()
+            return self._errMsg()
 
-    def readS16Rev(self, reg):
+    def readS16BitsReverse(self, reg):
         """
-        Reads a signed 16-bit value from the I2C device with rev byte order.
+        Reads a signed 16-bit value from the I2C device with reverse byte order.
         """
         try:
             lobyte = self.readS8(reg)
             hibyte = self.readU8(reg+1)
             result = (hibyte << 8) + lobyte
 
-            if (self.debug):
-                print "I2C: Device 0x%02X returned 0x%04X from reg 0x%02X" % (
-                    self.address, result & 0xFFFF, reg)
+            if self.debug:
+                print ("I2C: Device {0:#04x} returned {0:#06x} from reg "
+                       "{0:#04x}").format(self.address, result & 0xFFFF, reg)
 
             return result
         except IOError as err:
-            return self.errMsg()
+            return self._errMsg()
+
+    def _errMsg(self):
+        print ("Error accessing {0:#04x}: Check your "
+               "I2C address").format(self.address)
+        return -1
