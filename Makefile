@@ -14,6 +14,7 @@ RPI_DIR		= ${BOARDS_DIR}/rpi
 BB_DIR		= ${BOARDS_DIR}/beagleboard
 INTERFACES_DIR	= ${PACKAGE_DIR}/interfaces
 I2C_DIR		= ${INTERFACES_DIR}/i2c
+UTIL_DIR	= ${PACKAGE_DIR}/utilities
 #DOCS_DIR	= ${PREFIX}/docs
 
 #----------------------------------------------------------------------
@@ -48,6 +49,7 @@ clean	:
 	@(cd ${RPI_DIR}; rm -f *~ \#* .\#* *.pyc)
 	@(cd ${BB_DIR}; rm -f *~ \#* .\#* *.pyc)
 	@(cd ${I2C_DIR}; rm -f *~ \#* .\#* *.pyc)
+	@(cd ${UTIL_DIR}; rm -f *~ \#* .\#* *.pyc)
 	#@(cd ${DOCS_DIR}; make clean)
 
 clobber	: clean
