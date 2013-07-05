@@ -124,7 +124,7 @@ class I2C(BoardFactory, LoggingConfig, Utilities):
         try:
             results = self.bus.read_i2c_block_data(self.address, cmd, length)
             self.log.debug("I2C: Device 0x%02x returned the following from cmd "
-                           "0x%02x\n%s", self.address, cmd, results
+                           "0x%02x\n%s", self.address, cmd, results)
         except IOError as err:
             raise I2CException(self._ERROR_MSG.format(self.address, err))
 
