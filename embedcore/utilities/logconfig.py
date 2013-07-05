@@ -1,5 +1,5 @@
 #
-# utilities/logging.py
+# utilities/logconfig.py
 #
 """
 This package setup basic logging.
@@ -24,7 +24,7 @@ class LoggingConfig(object):
     DEFAULT_LOG_FORMAT = ("%(asctime)s %(module)s %(funcName)s "
                           "[line:%(lineno)d] %(levelname)s %(message)s")
 
-    def __init__(self, level= logging.WARNING):
+    def __init__(self, level=logging.WARNING):
         self.__format = self.DEFAULT_LOG_FORMAT
         self.__level = level
         self.log = self.configLogging()

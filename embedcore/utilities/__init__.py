@@ -12,4 +12,4 @@ __docformat__ = "restructuredtext en"
 
 
 from .utilities import Utilities
-from .logging import LoggingConfig
+from .logconfig import LoggingConfig
