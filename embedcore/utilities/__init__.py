@@ -1,5 +1,6 @@
 #
 # utilities/__init__.py
+#
 """
 This package provides general utility functionality.
 
@@ -11,3 +12,4 @@ __docformat__ = "restructuredtext en"
 
 
 from .utilities import Utilities
+from .logging import LoggingConfig

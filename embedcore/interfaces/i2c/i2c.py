@@ -25,128 +25,118 @@ __docformat__ = "restructuredtext en"
 
 
 import smbus
+import logging
 
 from embedcore.boards.boardfactory import BoardFactory
-from embedcore.utilities import Utilities
+from embedcore.utilities import Utilities, LoggingConfig
 
 
 class I2CException(Exception): pass
 
 
-class I2C(BoardFactory, Utilities):
+class I2C(BoardFactory, LoggingConfig, Utilities):
     """
     This class implements the interface for the I2C protocol.
     """
+    _ERROR_MSG = "Error accessing {0:#04x}: Check your I2C address, {}"
+
     def __init__(self, address, busnum=-1, debug=False):
         """
         Alternatively, you can hard-code the bus version below:
         self.bus = smbus.SMBus(0); # Force I2C0 (early 256MB Pi's)
         self.bus = smbus.SMBus(1); # Force I2C1 (512MB Pi's)
         """
-        super(I2C, self).__init__()
+        BoardFactory.__init__(self)
+        LoggingConfig.__init__(
+            self, level=debug and logging.DEBUG or logging.WARNING)
         self.address = address
         self.bus = smbus.SMBus(busnum >= 0 and busnum or self.getI2CPort())
         self.debug = debug
 
-    def readByteData(self, reg, signed=False):
+    def readByteData(self, cmd, signed=False):
         """
-        Read an 8-bit value from a specific register/address.
+        Read an 8-bit data from a register with a specific command.
 
 
         """
         try:
-            result = self.bus.read_byte_data(self.address, reg)
+            result = self.bus.read_byte_data(self.address, cmd)
 
             if signed and result > 127:
                 result -= 256
 
-            if self.debug:
-                print ("I2C: Device {0:#04x} returned {0:#04x} from reg "
-                       "{0:#04x}").format(self.address, result & 0xFF, reg)
-
-            return result
+            self.log.debug("I2C: Device 0x%02x returned 0x%02x from cmd 0x%02x",
+                           self.address, result & 0xFF, cmd)
         except IOError as err:
-            return self._errMsg()
+            raise I2CException(self._ERROR_MSG.format(self.address, err))
 
-    def writeByteData(self, reg, value):
+        return result
+
+    def writeByteData(self, cmd, value):
         """
-        Writes an 8-bit value to the specified register/address.
+        Writes an 8-bit data to .
         """
         try:
-            self.bus.write_byte_data(self.address, reg, value)
-
-            if self.debug:
-                print ("I2C: Wrote {0:#04x} to register "
-                       "{0:#04x}").format(value, reg)
+            self.bus.write_byte_data(self.address, cmd, value)
+            self.log.debug("I2C: Wrote 0x%02x to register 0x%02x", value, cmd)
         except IOError as err:
-            return self._errMsg()
+            raise I2CException(self._ERROR_MSG.format(self.address, err))
 
-    def readWordData(self, reg, signed=False, reverse=False):
+    def readWordData(self, cmd, signed=False, reverse=False):
         """
-        Read a 16-bit value from a specific register/address.
+        Read 16-bit data from a specific register/address.
 
 
         """
         try:
-            hiByte = self.readByteData(reg, signed=signed)
-            loByte = self.readByteData(reg+1) #, signed=signed)
+            hiByte = self.readByteData(cmd, signed=signed)
+            loByte = self.readByteData(cmd+1) #, signed=signed)
 
             if reverse:
                 result = (loByte << 8) + hiByte
             else:
                 result = (hiByte << 8) + loByte
 
-            if self.debug:
-                print ("I2C: Device {0:#04x} returned {0:#06x} from reg "
-                       "{0:#04x}").format(self.address, result & 0xFFFF, reg)
-
-            return result
+            self.log.debug("I2C: Device 0x%02x returned 0x%04x from cmd 0x%02x",
+                           self.address, result & 0xFFFF, cmd)
         except IOError as err:
-            return self._errMsg()
+            raise I2CException(self._ERROR_MSG.format(self.address, err))
 
-    def writeWordData(self, reg, value):
+        return result
+
+    def writeWordData(self, cmd, value):
         """
-        Writes a 16-bit value to the specified register/address pair.
+        Writes a 16-bit data to the specified register/address pair.
         """
         try:
-            self.bus.write_word_data(self.address, reg, value)
-
-            if self.debug:
-                print ("I2C: Wrote {0:#04x} to register pair "
-                       "{0:#04x},{0:#04x}").format(value, reg, reg+1)
+            self.bus.write_word_data(self.address, cmd, value)
+            self.log.debug("I2C: Wrote 0x%02x to register pair 0x%02x,0x%02x",
+                           value, cmd, cmd+1)
         except IOError as err:
-            return self._errMsg()
+            raise I2CException(self._ERROR_MSG.format(self.address, err))
 
-    def readBlockData(self, reg, length):
+    def readNBytesData(self, cmd, length):
         """
         Read a list of bytes from the I2C device.
         """
+        #if length > 32: length = 32
+
         try:
-            results = self.bus.read_i2c_block_data(self.address, reg, length)
-
-            if self.debug:
-                print ("I2C: Device {0:#04x} returned the following from reg "
-                       "{0:#04x}").format(self.address, reg)
-                print results
-
-            return results
+            results = self.bus.read_i2c_block_data(self.address, cmd, length)
+            self.log.debug("I2C: Device 0x%02x returned the following from cmd "
+                           "0x%02x\n%s", self.address, cmd, results
         except IOError as err:
-            return self._errMsg()
+            raise I2CException(self._ERROR_MSG.format(self.address, err))
 
-    def writeBlockData(self, reg, block):
+        return results
+
+    def writeBlockData(self, cmd, block):
         """
         Writes an array of bytes using I2C format.
         """
         try:
-            if self.debug:
-                print "I2C: Writing block to register {0:#04x}:".format(reg)
-                print block
-
-            self.bus.write_i2c_block_data(self.address, reg, block)
+            self.bus.write_i2c_block_data(self.address, cmd, block)
+            self.log.debug("I2C: Writing block to register 0x%02x: %s",
+                           cmd, block)
         except IOError as err:
-            return self._errMsg()
-
-    def _errMsg(self):
-        print ("Error accessing {0:#04x}: Check your "
-               "I2C address").format(self.address)
-        return -1
+            raise I2CException(self._ERROR_MSG.format(self.address, err))
