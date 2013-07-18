@@ -31,9 +31,10 @@ class BoardFactory(RaspberryPiCore, BeagleBoneCore):
     This class determines which board is in use. It runs the __init__ method
     from all subclasses till one succeeds.
     """
+    __SUBCLASSES = (RaspberryPiCore, BeagleBoneCore,)
 
     def __init__(self):
-        for klass in self.__class__.__bases__:
+        for klass in self.__SUBCLASSES:
             try:
                 klass.__init__(self)
                 klass._getBoardRevision(self)
