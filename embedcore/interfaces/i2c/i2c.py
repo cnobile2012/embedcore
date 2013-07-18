@@ -27,7 +27,8 @@ i2c-dev
 $ sudo modprobe i2c-dev
 $ i2cdetect -y busnum
 
-Where busnum is either 0 or 1 depending on the RPi version.
+Where busnum is either 0 or 1 depending on the RPi version. Other boards may
+provide both or more buses.
 """
 __docformat__ = "restructuredtext en"
 
