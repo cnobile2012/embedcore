@@ -1,6 +1,14 @@
 #
 # interfaces/i2c/i2c.py
 #
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
+#
 """
 This package is a redesign of the Adafruit Raspberry-Pi-Python-Code library.
 Which can be gotten here:
@@ -19,7 +27,8 @@ i2c-dev
 $ sudo modprobe i2c-dev
 $ i2cdetect -y busnum
 
-Where busnum is either 0 or 1 depending on the RPi version.
+Where busnum is either 0 or 1 depending on the RPi version. Other boards may
+provide both or more buses.
 """
 __docformat__ = "restructuredtext en"
 
