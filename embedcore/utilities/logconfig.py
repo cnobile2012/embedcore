@@ -2,7 +2,7 @@
 # utilities/logconfig.py
 #
 """
-This package setup basic logging.
+This package sets up basic logging.
 
 by: Carl J. Nobile
 
@@ -25,6 +25,9 @@ class LoggingConfig(object):
                           "[line:%(lineno)d] %(levelname)s %(message)s")
 
     def __init__(self, level=logging.WARNING):
+        """
+        Sets the default log format and level, then creates the logger.
+        """
         self.__format = self.DEFAULT_LOG_FORMAT
         self.__level = level
         self.log = self.configLogging()
@@ -32,18 +35,30 @@ class LoggingConfig(object):
     def setLogFormat(self, format=None):
         """
         Set the format string.
+
+        :Parameters:
+          format: `str`
+            A string compliant with the logging package used to format the
+            message.
         """
         self.__format = format
 
     def setLogLevel(self, level):
         """
         Set the logging level.
+
+        :Parameters:
+          level: `int`
+            An integer indicating the level the logger should run at.
         """
         self.__level = level
 
     def configLogging(self):
         """
         Run the basicConfig and set the DEBUG level.
+
+        Returns:
+          The logger object.
         """
         logging.basicConfig(format=self.__format)
         log = logging.getLogger()

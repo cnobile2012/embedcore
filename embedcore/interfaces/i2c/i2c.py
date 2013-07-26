@@ -42,9 +42,9 @@ class I2C(BoardFactory, LoggingConfig, Utilities):
 
     def __init__(self, address, busnum=-1, debug=False):
         """
-        Alternatively, you can hard-code the bus version below:
-        self.bus = smbus.SMBus(0); # Force I2C0 (early 256MB Pi's)
-        self.bus = smbus.SMBus(1); # Force I2C1 (512MB Pi's)
+        Calls the constructor in the BoardFactory class to determine the board
+        we are running on. Calls the constructor in the LoggingConfig class to
+        setup the logger. Creates the smbus composite object.
         """
         BoardFactory.__init__(self)
         LoggingConfig.__init__(
@@ -55,8 +55,11 @@ class I2C(BoardFactory, LoggingConfig, Utilities):
 
     def readByteData(self, cmd, signed=False):
         """
-        Read an 8-bit data from a register with a specific command.
+        Read 8-bit data from a register with the specified command.
 
+        :Parameters:
+          cmd: `int`
+            The command 
 
         """
         try:
