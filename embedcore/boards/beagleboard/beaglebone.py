@@ -29,6 +29,7 @@ class BeagleBoneException(BoardException): pass
 
 
 class BeagleBoneCore(BoardBase):
+    # This only tests for a BeagleBone Black at this point.
     __REV_REGEX = re.compile(r'.*ARMv7.*(?P<rev>rev 2) \(v7l\).*')
     BB_REVISIONS = {'rev 2': ('A5C', 512, 0)}
     DEFAULT_REV = "A5C"

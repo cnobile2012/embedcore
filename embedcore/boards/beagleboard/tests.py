@@ -62,7 +62,9 @@ class TestBeagleBone(unittest.TestCase):
         except BeagleBoneException as e:
             self.assertRaises(e)
 
-        self.assertTrue(self._revision in BeagleBoneCore.BB_REVISIONS.keys())
+        models = [x for x, y, z in set(BeagleBoneCore.BB_REVISIONS.values())]
+        #self.assertTrue(self._revision in BeagleBoneCore.BB_REVISIONS.values())
+        self.assertTrue(self._revision in models)
 
     def test_getModel(self):
         model = self._bb.getModel()
