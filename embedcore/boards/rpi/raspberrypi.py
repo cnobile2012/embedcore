@@ -37,6 +37,7 @@ class RaspberryPiCore(BoardBase):
                      '0xf': ('B2', 512, 1),
                      }
     DEFAULT_REV = "0x0"
+    __REV_REGEX = re.compile(r'bcm2708.boardrev=(0x[0123456789abcdef]*) ')
 
     def __init__(self):
         super(RaspberryPiCore, self).__init__()
@@ -56,8 +57,7 @@ class RaspberryPiCore(BoardBase):
         """
         try:
             with open('/proc/cmdline', 'r') as f:
-                m = re.search('bcm2708.boardrev=(0x[0123456789abcdef]*) ',
-                              f.readline())
+                m = self.__REV_REGEX.search(f.readline())
 
                 if m is None:
                     raise RaspberryPiException("Possibly not a Raspberry Pi.")
